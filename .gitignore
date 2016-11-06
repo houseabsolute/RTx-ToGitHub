@@ -1,0 +1,14 @@
+#*#
+*~
+.#*
+.Makefile
+.Makefile.old
+/.build
+/.tidyall.d
+/Build
+/Debian_CPANTS.txt
+/RTx-ToGitHub-*
+/_build
+/blib*
+/cover_db*
+/pm_to_blib*
