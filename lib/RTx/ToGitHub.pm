@@ -622,6 +622,112 @@ sub _close_rt_ticket {
 
 # ABSTRACT: Convert rt.cpan.org tickets to GitHub issues
 
+=pod
+
+=for Pod::Coverage .*
+
+=head1 SYNOPSIS
+
+    $> rt-to-github.pl
+
+=head1 DESCRIPTION
+
+This is a tool to convert RT tickets to GitHub issues. When you run it, it
+will:
+
+=over 4
+
+=item 1. Prompt you for any info it needs
+
+Run with C<--no-prompt> to disable prompts, in which case it will either use
+the command line options you provide or look in various config files and C<git
+config> for needed info.
+
+=item 2. Make GitHub issues for each RT ticket
+
+The body of the ticket will be the new issue body, with replies converted to
+comments. Requesters and others participating in the discussion will be
+converted to C<@username> mentions on GitHub. The conversion is based on a
+one-time data dump made by pulling author data from MetaCPAN to make an email
+address to GitHub username map. Patches to this map are welcome.
+
+Only tickets with the "new", "open", or "stalled" status are
+converted. Stalled tickets are given a "stalled" label on GitHub.
+
+=item 3. Close the RT ticket
+
+Unless you pass the C<--no-resolve> option.
+
+=back
+
+=head1 COMMAND LINE OPTIONS
+
+This command accepts the following flags:
+
+=head2 --dry
+
+Run in dry-run mode. No issues will be created and no RT tickets will be
+resolved. This will just print some output to indicate what _would_ have
+happened.
+
+=head2 --no-prompt
+
+By default you will be prompted to enter various bits of info, even if you
+give everything needed on the CLI. If you pass this flag, then only CLI
+options and inferred config values will be used.
+
+=head2 --github-user
+
+The github user to use. This defaults to looking for a "github.user" config
+item in your git config.
+
+=head2 --github-token
+
+The github token to use. This defaults to looking for a "github.token" config
+item in your git config.
+
+=head2 --repo
+
+The repo name to use. By default this is determined by looking at the URL for
+the remote named "origin". This should just be the repo name by itself,
+without a username. So pass "Net-Foo", not "username/Net-Foo".
+
+=head2 --pause-id
+
+Your PAUSE ID. If you have a F<~/.pause> file this will be parsed your username.
+
+=head2 --pause-password
+
+Your PAUSE password. If you have a F<~/.pause> file this will be parsed your
+username.
+
+=head2 --dist
+
+The distribution name which is used for your RT queue name. By default, this
+is taken by looking for F<[MY]META.*> files or looking in a F<dist.ini> in the
+current directory. This falls back to the repo name.
+
+=head2 --no-resolve
+
+If you pass this flag then the RT tickets are not marked as closed as they are
+converted.
+
+=head2 --ticket
+
+You can specify a single RT ticket to convert by giving a ticket ID number.
+
+=head2 --force
+
+By default, if a matching issue already exists on GitHub, the ticket will not
+be converted. Pass this flag to force a new issue to be created anyway.
+
+=head1 CREDITS
+
+Much of the code in this module was taken from David Golden's conversion
+script at L<https://github.com/dagolden/zzz-rt-to-github>.
+
+=cut
+
 __DATA__
 # This was produced from public MetaCPAN API data using
 # bin/metacpan-github-names.pl in this distro
@@ -1733,110 +1839,3 @@ __DATA__
   "zwon\@cpan.org" => "trinitum",
   "zzz\@cpan.org" => "zzzcpan"
 }
-__END__
-
-=pod
-
-=for Pod::Coverage .*
-
-=head1 SYNOPSIS
-
-    $> rt-to-github.pl
-
-=head1 DESCRIPTION
-
-This is a tool to convert RT tickets to GitHub issues. When you run it, it
-will:
-
-=over 4
-
-=item 1. Prompt you for any info it needs
-
-Run with C<--no-prompt> to disable prompts, in which case it will either use
-the command line options you provide or look in various config files and C<git
-config> for needed info.
-
-=item 2. Make GitHub issues for each RT ticket
-
-The body of the ticket will be the new issue body, with replies converted to
-comments. Requesters and others participating in the discussion will be
-converted to C<@username> mentions on GitHub. The conversion is based on a
-one-time data dump made by pulling author data from MetaCPAN to make an email
-address to GitHub username map. Patches to this map are welcome.
-
-Only tickets with the "new", "open", or "stalled" status are
-converted. Stalled tickets are given a "stalled" label on GitHub.
-
-=item 3. Close the RT ticket
-
-Unless you pass the C<--no-resolve> option.
-
-=back
-
-=head1 COMMAND LINE OPTIONS
-
-This command accepts the following flags:
-
-=head2 --dry
-
-Run in dry-run mode. No issues will be created and no RT tickets will be
-resolved. This will just print some output to indicate what _would_ have
-happened.
-
-=head2 --no-prompt
-
-By default you will be prompted to enter various bits of info, even if you
-give everything needed on the CLI. If you pass this flag, then only CLI
-options and inferred config values will be used.
-
-=head2 --github-user
-
-The github user to use. This defaults to looking for a "github.user" config
-item in your git config.
-
-=head2 --github-token
-
-The github token to use. This defaults to looking for a "github.token" config
-item in your git config.
-
-=head2 --repo
-
-The repo name to use. By default this is determined by looking at the URL for
-the remote named "origin". This should just be the repo name by itself,
-without a username. So pass "Net-Foo", not "username/Net-Foo".
-
-=head2 --pause-id
-
-Your PAUSE ID. If you have a F<~/.pause> file this will be parsed your username.
-
-=head2 --pause-password
-
-Your PAUSE password. If you have a F<~/.pause> file this will be parsed your
-username.
-
-=head2 --dist
-
-The distribution name which is used for your RT queue name. By default, this
-is taken by looking for F<[MY]META.*> files or looking in a F<dist.ini> in the
-current directory. This falls back to the repo name.
-
-=head2 --no-resolve
-
-If you pass this flag then the RT tickets are not marked as closed as they are
-converted.
-
-=head2 --ticket
-
-You can specify a single RT ticket to convert by giving a ticket ID number.
-
-=head2 --force
-
-By default, if a matching issue already exists on GitHub, the ticket will not
-be converted. Pass this flag to force a new issue to be created anyway.
-
-=head1 CREDITS
-
-Much of the code in this module was taken from David Golden's conversion
-script at L<https://github.com/dagolden/zzz-rt-to-github>.
-
-=cut
