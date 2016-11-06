@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.02     2016-11-06
+
 - Fix order of POD sections in the docs.
 
 
