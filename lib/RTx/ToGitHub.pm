@@ -428,10 +428,10 @@ sub _extract_ticket_data {
     my $body
         = "Migrated from [rt.cpan.org #$id](https://rt.cpan.org/Ticket/Display.html?id=$id) (status was '$status')\n";
 
-    $body .= "\nRequesters:\n";
+    $body .= "\nRequestors:\n";
     $body .= join q{},
         map {"* $_\n"}
-        map { $self->_maybe_tag_email($_) } $ticket->requesters;
+        map { $self->_maybe_tag_email($_) } $ticket->requestors;
 
     my @attach_links;
     my $attach = $ticket->attachments->get_iterator;
@@ -646,7 +646,7 @@ config> for needed info.
 =item 2. Make GitHub issues for each RT ticket
 
 The body of the ticket will be the new issue body, with replies converted to
-comments. Requesters and others participating in the discussion will be
+comments. Requestors and others participating in the discussion will be
 converted to C<@username> mentions on GitHub. The conversion is based on a
 one-time data dump made by pulling author data from MetaCPAN to make an email
 address to GitHub username map. Patches to this map are welcome.
