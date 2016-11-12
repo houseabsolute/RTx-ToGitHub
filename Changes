@@ -9,6 +9,10 @@
 
 - Also include tickets with a status of "patched".
 
+- Added a monkey patch to work around
+  https://rt.cpan.org/Ticket/Display.html?id=118729, which caused some ticket
+  or comment bodies to be lost entirely.
+
 
 0.02     2016-11-06
 

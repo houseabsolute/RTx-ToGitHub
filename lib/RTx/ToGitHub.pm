@@ -656,6 +656,79 @@ sub _close_rt_ticket {
     say "Closed ticket #$id on RT" or die $!;
 }
 
+if ( RT::Client::REST->VERSION <= 0.50 ) {
+    no warnings 'redefine';
+
+    ## no critic (ValuesAndExpressions::ProhibitInterpolationOfLiterals, RegularExpressions::ProhibitUnusualDelimiters, ValuesAndExpressions::ProhibitCommaSeparatedStatements)
+
+#<<<
+    *RT::Client::REST::Object::from_form = sub {
+    my $self = shift;
+
+    unless (@_) {
+        RT::Client::REST::Object::NoValuesProvidedException->throw;
+    }
+
+    my $hash = shift;
+
+    unless ('HASH' eq ref($hash)) {
+        RT::Client::REST::Object::InvalidValueException->throw(
+            "Expecting a hash reference as argument to 'from_form'",
+        );
+    }
+
+    # lowercase hash keys
+    my $i = 0;
+    $hash = { map { ($i++ & 1) ? $_ : lc } %$hash };
+
+    my $attributes = $self->_attributes;
+    my %rest2attr;  # Mapping of REST names to our attributes;
+    while (my ($attr, $value) = each(%$attributes)) {
+        my $rest_name = (exists($attributes->{$attr}{rest_name}) ?
+                         lc($attributes->{$attr}{rest_name}) : $attr);
+        $rest2attr{$rest_name} = $attr;
+    }
+
+    # Now set attributes:
+    while (my ($key, $value) = each(%$hash)) {
+        # Handle custom fields, ideally /(?(1)})/ would be appened to RE
+    if( $key =~ m%^(?:cf|customfield)(?:-|\.\{)([#\s\w_:()?/-]+)% ){
+        $key = $1;
+
+            # XXX very sketchy. Will fail on long form data e.g; wiki CF
+            if ($value =~ /,/) {
+                $value = [ split(/\s*,\s*/, $value) ];
+            }
+
+            $self->cf($key, $value);
+            next;
+        }
+
+        unless (exists($rest2attr{$key})) {
+            warn "Unknown key: $key\n";
+            next;
+        }
+
+    # Fix for https://rt.cpan.org/Ticket/Display.html?id=118729
+        if ($key ne 'content' && $value =~ m/not set/i) {
+            $value = undef;
+        }
+
+        my $method = $rest2attr{$key};
+        if (exists($attributes->{$method}{form2value})) {
+            $value = $attributes->{$method}{form2value}($value);
+        } elsif ($attributes->{$method}{list}) {
+            $value = [split(/\s*,\s*/, $value)],
+        }
+
+        $self->$method($value);
+    }
+
+    return;
+}
+#>>>
+}
+
 1;
 
 # ABSTRACT: Convert rt.cpan.org tickets to GitHub issues
