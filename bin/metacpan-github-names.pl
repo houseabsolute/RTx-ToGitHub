@@ -42,5 +42,8 @@ while ( my $result = $scroller->next ) {
     }
 }
 
+# Extra mappings I know about go here ...
+$map{'olaf@wundersolutions.com'} = 'oalders';
+
 use Devel::Dwarn;
 Dwarn \%map;
