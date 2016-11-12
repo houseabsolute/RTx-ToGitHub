@@ -20,6 +20,7 @@ requires "Specio::Library::Numeric" => "0";
 requires "Specio::Library::Perl" => "0";
 requires "Specio::Library::String" => "0";
 requires "Try::Tiny" => "0";
+requires "URI::Escape" => "0";
 requires "namespace::autoclean" => "0";
 requires "perl" => "v5.10.0";
 requires "strict" => "0";

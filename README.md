@@ -4,7 +4,7 @@ RTx::ToGitHub - Convert rt.cpan.org tickets to GitHub issues
 
 # VERSION
 
-version 0.02
+version 0.03
 
 # SYNOPSIS
 
@@ -24,7 +24,7 @@ will:
 - 2. Make GitHub issues for each RT ticket
 
     The body of the ticket will be the new issue body, with replies converted to
-    comments. Requesters and others participating in the discussion will be
+    comments. Requestors and others participating in the discussion will be
     converted to `@username` mentions on GitHub. The conversion is based on a
     one-time data dump made by pulling author data from MetaCPAN to make an email
     address to GitHub username map. Patches to this map are welcome.
@@ -104,8 +104,7 @@ script at [https://github.com/dagolden/zzz-rt-to-github](https://github.com/dago
 
 # SUPPORT
 
-Bugs may be submitted through [the RT bug tracker](http://rt.cpan.org/Public/Dist/Display.html?Name=RTx-ToGitHub)
-(or [bug-rtx-togithub@rt.cpan.org](mailto:bug-rtx-togithub@rt.cpan.org)).
+Bugs may be submitted through [https://github.com/houseabsolute/RTx-ToGitHub/issues](https://github.com/houseabsolute/RTx-ToGitHub/issues).
 
 I am also usually active on IRC as 'drolsky' on `irc://irc.perl.org`.
 
@@ -129,6 +128,10 @@ button at [http://www.urth.org/~autarch/fs-donation.html](http://www.urth.org/~a
 # AUTHOR
 
 Dave Rolsky <autarch@urth.org>
+
+# CONTRIBUTOR
+
+Dan Stewart <danielandrewstewart@gmail.com>
 
 # COPYRIGHT AND LICENSE
 

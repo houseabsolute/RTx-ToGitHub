@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.03     2016-11-12
+
 - Added a --test option that you should use when testing a conversion. This
   sets --force and --no-resolve. It also changes how ticket bodies are
   formatted to avoid @mentioning people.
