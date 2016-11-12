@@ -25,6 +25,7 @@ use Specio::Library::Numeric;
 use Specio::Library::Perl;
 use Specio::Library::String;
 use Try::Tiny;
+use URI::Escape qw( uri_escape );
 
 use Moo;
 use MooX::Options;
@@ -467,8 +468,13 @@ sub _extract_ticket_data {
         my $xact   = $i->transaction_id;
         my $att_id = $i->id;
         my $name   = $i->file_name or next;
-        push @attach_links,
-            "[$name](https://rt.cpan.org/Ticket/Attachment/$xact/$att_id/$name)";
+        push @attach_links, sprintf(
+            '[%s](https://rt.cpan.org/Ticket/Attachment/%s/%s/%s)',
+            $name,
+            $xact,
+            $att_id,
+            uri_escape($name),
+        );
     }
     if (@attach_links) {
         my $attach_list = join( q{}, map {"* $_\n"} @attach_links );

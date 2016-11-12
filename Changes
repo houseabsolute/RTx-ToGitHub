@@ -4,6 +4,9 @@
   sets --force and --no-resolve. It also changes how ticket bodies are
   formatted to avoid @mentioning people.
 
+- Fixed links to attachments with spaces and other characters that needed URI
+  escaping.
+
 
 0.02     2016-11-06
 
