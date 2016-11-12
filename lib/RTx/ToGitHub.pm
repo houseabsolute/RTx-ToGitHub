@@ -358,7 +358,7 @@ sub _convert_tickets {
     my $query = sprintf( <<'EOF', $self->dist );
 Queue = '%s'
 and
-( Status = 'new' or Status = 'open' or Status = 'stalled')
+( Status = 'new' or Status = 'open' or Status = 'stalled' or Status = 'patched')
 EOF
     $query .= sprintf( 'and id = %s', $self->ticket ) if $self->_has_ticket;
 

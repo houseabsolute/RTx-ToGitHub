@@ -7,6 +7,8 @@
 - Fixed links to attachments with spaces and other characters that needed URI
   escaping.
 
+- Also include tickets with a status of "patched".
+
 
 0.02     2016-11-06
 
