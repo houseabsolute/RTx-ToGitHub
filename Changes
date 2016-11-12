@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Added a --test option that you should use when testing a conversion. This
+  sets --force and --no-resolve. It also changes how ticket bodies are
+  formatted to avoid @mentioning people.
+
+
 0.02     2016-11-06
 
 - Fix order of POD sections in the docs.

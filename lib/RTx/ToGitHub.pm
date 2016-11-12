@@ -112,7 +112,8 @@ option dist => (
 option force => (
     is      => 'ro',
     isa     => t('Bool'),
-    default => 0,
+    lazy    => 1,
+    default => sub { $_[0]->test ? 1 : 0 },
     doc     => 'Create issues in GitHub even if one already exists.',
 );
 
@@ -120,7 +121,8 @@ option resolve => (
     is          => 'ro',
     isa         => t('Bool'),
     negativable => 1,
-    default     => 1,
+    lazy        => 1,
+    default     => sub { $_[0]->test ? 0 : 1 },
     doc =>
         'Set this to false to to disable resolving RT tickets as they are converted.',
 );
@@ -131,6 +133,16 @@ option ticket => (
     format    => 'i',
     predicate => '_has_ticket',
     doc       => 'Only operate on the given RT ticket.',
+);
+
+option test => (
+    is      => 'ro',
+    isa     => t('Bool'),
+    lazy    => 1,
+    default => 0,
+    doc     => 'Run in test mode. This is equivalent to setting --no-resolve and --force.'
+        . ' It also changes how GitHub tickets are formatted to avoid including'
+        . ' @mentions of other people so they do not get a flood of email while you test.',
 );
 
 has _default_dist_name => (
@@ -186,6 +198,22 @@ sub run {
     my $self = shift;
 
     $self->_ensure_all_config;
+
+    my $msg = sprintf(
+        'Converting %s from the %s RT queue to the %s/%s GitHub repo.',
+        ( $self->ticket ? 'ticket #' . $self->ticket : 'all tickets' ),
+        $self->dist,
+        $self->github_user,
+        $self->repo
+    );
+    say $msg or die $!;
+    if ( $self->resolve ) {
+        say 'Will resolve all RT tickets.' or die $!;
+    }
+    unless ( $self->force ) {
+        say 'Will skip tickets that are already converted.' or die $!;
+    }
+
     $self->_convert_tickets;
 
     return 0;
@@ -503,7 +531,10 @@ sub _maybe_tag_email {
 
     my $text         = $email;
     my $contributors = $self->_contributor_map;
-    $text .= ' (@' . $contributors->{ lc $email } . ')'
+    $text
+        .= ' (@'
+        . ( $self->test ? q{ } : q{} )
+        . $contributors->{ lc $email } . ')'
         if $contributors->{ lc $email };
 
     return $text;
