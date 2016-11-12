@@ -141,7 +141,8 @@ option test => (
     isa     => t('Bool'),
     lazy    => 1,
     default => 0,
-    doc     => 'Run in test mode. This is equivalent to setting --no-resolve and --force.'
+    doc =>
+        'Run in test mode. This is equivalent to setting --no-resolve and --force.'
         . ' It also changes how GitHub tickets are formatted to avoid including'
         . ' @mentions of other people so they do not get a flood of email while you test.',
 );
