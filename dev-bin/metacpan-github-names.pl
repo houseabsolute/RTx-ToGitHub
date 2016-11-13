@@ -2,9 +2,11 @@
 
 use strict;
 use warnings;
-use v5.10;
+use v5.14;
 
+use Data::Dumper::Concise;
 use List::AllUtils qw( first );
+use Path::Tiny qw( path );
 use Search::Elasticsearch;
 
 my $es = Search::Elasticsearch->new(
@@ -47,5 +49,15 @@ while ( my $result = $scroller->next ) {
 # Extra mappings I know about go here ...
 $map{'olaf@wundersolutions.com'} = 'oalders';
 
-use Devel::Dwarn;
-Dwarn \%map;
+my $dump = sprintf( <<'EOF', $0, Dumper( \%map ) );
+__DATA__
+# This was produced from public MetaCPAN API data using
+# %s in this distro
+%s
+EOF
+chomp $dump;
+
+my $mod = path('lib/RTx/ToGitHub.pm');
+$mod->spew_utf8( $mod->slurp_utf8 =~ s/__DATA__.+/$dump/sr );
+
+exit 0;

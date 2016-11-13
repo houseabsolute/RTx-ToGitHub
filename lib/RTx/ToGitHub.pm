@@ -841,7 +841,7 @@ script at L<https://github.com/dagolden/zzz-rt-to-github>.
 
 __DATA__
 # This was produced from public MetaCPAN API data using
-# bin/metacpan-github-names.pl in this distro
+# ./dev-bin/metacpan-github-names.pl in this distro
 {
   "#####\@juerd.nl" => "juerd",
   "a\@ngs.io" => "ngs",
