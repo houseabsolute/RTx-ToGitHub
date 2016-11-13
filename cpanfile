@@ -4,6 +4,7 @@ requires "Data::Dumper::Concise" => "0";
 requires "Encode" => "0";
 requires "IO::Prompt::Tiny" => "0";
 requires "IPC::System::Simple" => "0";
+requires "LWP::ConsoleLogger" => "0";
 requires "Moo" => "0";
 requires "MooX::Options" => "0";
 requires "Path::Tiny" => "0";

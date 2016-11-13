@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.07     2016-11-13
+
 - Added a --debug-ua flag. When enabled this uses LWP::ConsoleLogger to dump
   the interaction with RT.
 
