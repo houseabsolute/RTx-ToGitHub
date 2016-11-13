@@ -278,7 +278,7 @@ sub _build_repo {
 
     my ($repo)
         = ( $self->_git_config->{'remote.origin.url'} // q{} )
-        =~ m{github\.com[:/](.+?)(?:\.git)?$};
+        =~ m{github\.com[:/].+?/(.+?)(?:\.git)?$};
 
     $repo = IO::Prompt::Tiny::prompt( 'GitHub repo:', ( $repo // q{} ) )
         if $self->prompt;
