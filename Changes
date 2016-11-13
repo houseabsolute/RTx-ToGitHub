@@ -1,5 +1,11 @@
 {{$NEXT}}
 
+- Added a shebang line to rt-to-github.pl
+
+- The metacpan-github-names.pl will no longer be installed. This is only used
+  for development.
+
+
 0.03     2016-11-12
 
 - Added a --test option that you should use when testing a conversion. This
