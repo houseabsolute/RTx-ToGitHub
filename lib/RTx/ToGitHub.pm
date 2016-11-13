@@ -253,8 +253,12 @@ sub _build_github_user {
     my $self = shift;
 
     my $name = $self->_git_config->{'github.user'};
-    ($name) //= ( $self->_git_config->{'remote.origin.url'} // q{} )
-        =~ m{github\.com[:/]([^/]+)};
+    if ( !defined $name
+        && ( $self->_git_config->{'remote.origin.url'} // q{} )
+        =~ m{github\.com[:/]([^/]+)} ) {
+
+        $name = $1;
+    }
 
     $name = IO::Prompt::Tiny::prompt( 'GitHub user:', ( $name // q{} ) )
         if $self->prompt;
