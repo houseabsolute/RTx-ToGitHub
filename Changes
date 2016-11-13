@@ -3,6 +3,10 @@
 - Added a --debug-ua flag. When enabled this uses LWP::ConsoleLogger to dump
   the interaction with RT.
 
+- Handle a failure to find a user associated with an RT ticket or transaction
+  gracefully. Apparently it's possible for the Creator field for a transaction
+  to contain an email that's no longer in RT.
+
 
 0.06     2016-11-13
 

@@ -543,15 +543,20 @@ sub _extract_ticket_data {
         my $trans = shift;
 
         my $user = $cache{ $trans->creator } ||= do {
-            my $u = RT::Client::REST::User->new(
-                id => $trans->creator,
-                rt => $trans->rt,
-            );
-            $u->retrieve;
-            $u;
+            try {
+                my $u = RT::Client::REST::User->new(
+                    id => $trans->creator,
+                    rt => $trans->rt,
+                );
+                $u->retrieve;
+                $u;
+            };
         };
 
-        my $email = lc( $user->email_address // 'unknown' );
+        my $email;
+        $email = lc $user->email_address if $user;
+        $email //= lc $trans->creator;
+
         return sprintf(
             'From %s on %s:',
             $self->_maybe_tag_email($email),
