@@ -147,6 +147,14 @@ option test => (
         . ' @mentions of other people so they do not get a flood of email while you test.',
 );
 
+option debug_ua => (
+    is      => 'ro',
+    isa     => t('Bool'),
+    lazy    => 1,
+    default => 0,
+    doc     => 'Use LWP::ConsoleLogger to debug the interactions with RT',
+);
+
 has _default_dist_name => (
     is      => 'ro',
     isa     => t('Str'),
@@ -390,6 +398,22 @@ sub _build_rt_client {
     my $self = shift;
 
     my $rt = RT::Client::REST->new( server => 'https://rt.cpan.org/' );
+
+    if ( $self->debug_ua ) {
+        require LWP::ConsoleLogger;
+        my $logger = LWP::ConsoleLogger->new(
+            dump_params => 1,
+        );
+        $rt->_ua->add_handler(
+            'response_done',
+            sub { $logger->response_callback(@_) }
+        );
+        $rt->_ua->add_handler(
+            'request_send',
+            sub { $logger->request_callback(@_) }
+        );
+    }
+
     $rt->login(
         username => $self->pause_id,
         password => $self->pause_password,
