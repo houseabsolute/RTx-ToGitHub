@@ -4,7 +4,7 @@ RTx::ToGitHub - Convert rt.cpan.org tickets to GitHub issues
 
 # VERSION
 
-version 0.03
+version 0.04
 
 # SYNOPSIS
 
@@ -106,7 +106,7 @@ script at [https://github.com/dagolden/zzz-rt-to-github](https://github.com/dago
 
 Bugs may be submitted through [https://github.com/houseabsolute/RTx-ToGitHub/issues](https://github.com/houseabsolute/RTx-ToGitHub/issues).
 
-I am also usually active on IRC as 'drolsky' on `irc://irc.perl.org`.
+I am also usually active on IRC as 'autarch' on `irc://irc.perl.org`.
 
 # DONATIONS
 

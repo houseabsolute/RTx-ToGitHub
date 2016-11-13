@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.04     2016-11-13
+
 - Added a shebang line to rt-to-github.pl
 
 - The metacpan-github-names.pl will no longer be installed. This is only used
