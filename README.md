@@ -4,7 +4,7 @@ RTx::ToGitHub - Convert rt.cpan.org tickets to GitHub issues
 
 # VERSION
 
-version 0.04
+version 0.05
 
 # SYNOPSIS
 

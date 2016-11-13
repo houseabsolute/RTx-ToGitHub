@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.05     2016-11-13
+
 - The default repo generated when prompts were enabled would include both the
   user/org name and the repo name, when it should just be the repo name.
 
