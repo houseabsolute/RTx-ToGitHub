@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.08     2016-12-19
+
 - Call CPAN::Meta->load_file to load a meta file instead of
   CPAN::Meta->new. Patch by Michiel Beijen. GitHub #3.
 

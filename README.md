@@ -4,7 +4,7 @@ RTx::ToGitHub - Convert rt.cpan.org tickets to GitHub issues
 
 # VERSION
 
-version 0.07
+version 0.08
 
 # SYNOPSIS
 
@@ -129,9 +129,10 @@ button at [http://www.urth.org/~autarch/fs-donation.html](http://www.urth.org/~a
 
 Dave Rolsky <autarch@urth.org>
 
-# CONTRIBUTOR
+# CONTRIBUTORS
 
-Dan Stewart <danielandrewstewart@gmail.com>
+- Dan Stewart <danielandrewstewart@gmail.com>
+- Michiel Beijen <michiel.beijen@gmail.com>
 
 # COPYRIGHT AND LICENSE
 
