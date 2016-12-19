@@ -349,7 +349,7 @@ sub _build_dist {
 sub _dist_from_local_files {
     my ($meta) = grep {-r} qw( MYMETA.json MYMETA.yml META.json META.yml );
     if ($meta) {
-        my $cm = CPAN::Meta->new($meta);
+        my $cm = CPAN::Meta->load_file($meta);
         return $cm->name;
     }
     elsif ( -r 'dist.ini' ) {
