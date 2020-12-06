@@ -53,7 +53,7 @@ option github_user => (
     format  => 's',
     lazy    => 1,
     builder => '_build_github_user',
-    doc =>
+    doc     =>
         'The GitHub user to use. Will default to github.user in your git config if available.'
         . ' Otherwise it will look at the remote URL and try to guess.',
 );
@@ -64,7 +64,7 @@ option github_token => (
     format  => 's',
     lazy    => 1,
     builder => '_build_github_token',
-    doc =>
+    doc     =>
         'The GitHub token to use. Will default to github.token in your git config if available.',
 );
 
@@ -74,7 +74,7 @@ option repo => (
     format  => 's',
     lazy    => 1,
     builder => '_build_repo',
-    doc =>
+    doc     =>
         'The GitHub repo to operate against. By default this will be determined'
         . ' by looking at URL for the origin remote.',
 );
@@ -85,7 +85,7 @@ option pause_id => (
     format  => 's',
     lazy    => 1,
     builder => '_build_pause_id',
-    doc =>
+    doc     =>
         'Your PAUSE ID. This will be found by looking at ~/.pause if that file exists.',
 );
 
@@ -95,7 +95,7 @@ option pause_password => (
     format  => 's',
     lazy    => 1,
     builder => '_build_pause_password',
-    doc =>
+    doc     =>
         'Your PAUSE password. This will be found by looking at ~/.pause if that file exists.',
 );
 
@@ -105,7 +105,7 @@ option dist => (
     format  => 's',
     lazy    => 1,
     builder => '_build_dist',
-    doc =>
+    doc     =>
         'The distribution name as seen on RT. By default this will be determined by'
         . ' looking at [MY]META.* files in the working directory, a dist.ini, or the repo name.',
 );
@@ -124,7 +124,7 @@ option resolve => (
     negativable => 1,
     lazy        => 1,
     default     => sub { $_[0]->test ? 0 : 1 },
-    doc =>
+    doc         =>
         'Set this to false to to disable resolving RT tickets as they are converted.',
 );
 
@@ -141,7 +141,7 @@ option test => (
     isa     => t('Bool'),
     lazy    => 1,
     default => 0,
-    doc =>
+    doc     =>
         'Run in test mode. This is equivalent to setting --no-resolve and --force.'
         . ' It also changes how GitHub tickets are formatted to avoid including'
         . ' @mentions of other people so they do not get a flood of email while you test.',
@@ -511,7 +511,7 @@ sub _extract_ticket_data {
     }
 
     my $create = $ticket->transactions( type => 'Create' )->get_iterator->();
-    my $from = $self->_transaction_from($create);
+    my $from   = $self->_transaction_from($create);
     $body .= sprintf( "\n%s\n\n%s\n\n", $from, $create->content );
 
     my @comments;
@@ -656,7 +656,7 @@ sub _make_github_issue {
         );
         unless ( $c_result->success ) {
             say "Error adding a comment to issue #$gh_id:" or die $!;
-            say Dumper( $c_result->content ) or die $!;
+            say Dumper( $c_result->content )               or die $!;
             return;
         }
     }
