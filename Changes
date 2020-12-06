@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+- Small doc fixes.
+
+
 0.08     2016-12-19
 
 - Call CPAN::Meta->load_file to load a meta file instead of

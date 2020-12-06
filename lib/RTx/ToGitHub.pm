@@ -795,7 +795,7 @@ converted to C<@username> mentions on GitHub. The conversion is based on a
 one-time data dump made by pulling author data from MetaCPAN to make an email
 address to GitHub username map. Patches to this map are welcome.
 
-Only tickets with the "new", "open", or "stalled" status are
+Only tickets with the "new", "open", "patched", or "stalled" status are
 converted. Stalled tickets are given a "stalled" label on GitHub.
 
 =item 3. Close the RT ticket
@@ -838,12 +838,13 @@ without a username. So pass "Net-Foo", not "username/Net-Foo".
 
 =head2 --pause-id
 
-Your PAUSE ID. If you have a F<~/.pause> file this will be parsed your username.
+Your PAUSE ID. If you have a F<~/.pause> file this will be parsed for your
+username.
 
 =head2 --pause-password
 
-Your PAUSE password. If you have a F<~/.pause> file this will be parsed your
-username.
+Your PAUSE password. If you have a F<~/.pause> file this will be parsed for
+your password.
 
 =head2 --dist
 
