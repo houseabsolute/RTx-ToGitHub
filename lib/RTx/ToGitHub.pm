@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 use CPAN::Meta;
 use Carp;
