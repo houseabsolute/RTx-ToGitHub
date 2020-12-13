@@ -866,6 +866,11 @@ You can specify a single RT ticket to convert by giving a ticket ID number.
 By default, if a matching issue already exists on GitHub, the ticket will not
 be converted. Pass this flag to force a new issue to be created anyway.
 
+=head1 GITHUB TOKENS
+
+You can generate a GitHub token at L<https://github.com/settings/tokens>. This
+token must have the "public_repo" permission (or "repo" for private repos).
+
 =head1 CREDITS
 
 Much of the code in this module was taken from David Golden's conversion
